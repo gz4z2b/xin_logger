@@ -1,0 +1,14 @@
+2024-01-22T16:27:26.754+0800	INFO	zap/logger.go:19	test	{"第一个": "第一个内容"}
+2024-01-22T16:27:33.766+0800	INFO	zap/logger.go:19	test	{"第一个": "第一个内容"}
+2024-01-22T16:27:38.959+0800	INFO	zap/logger.go:19	test	{"第一个": "第一个内容"}
+2024-01-22T16:28:17.137+0800	INFO	zap/logger.go:19	test	{"第一个": "第一个内容"}
+2024-01-22T16:28:40.224+0800	INFO	zap/logger.go:19	test	{"第一个": "第一个内容"}
+2024-01-22T16:31:21.085+0800	INFO	zap/logger.go:19	test	{"第一个": "第一个内容"}
+2024-01-22T16:31:23.668+0800	INFO	zap/logger.go:19	test	{"第一个": "第一个内容"}
+2024-01-22T16:31:26.655+0800	INFO	zap/logger.go:19	test	{"第一个": "第一个内容"}
+2024-01-22T16:31:49.336+0800	INFO	zap/logger.go:19	test	{"第一个": "第一个内容"}
+2024-01-22T16:31:49.336+0800	DEBUG	zap/logger.go:31	debug	{"debug": "debug内容"}
+2024-01-22T16:31:52.741+0800	INFO	zap/logger.go:19	test	{"第一个": "第一个内容"}
+2024-01-22T16:31:52.741+0800	DEBUG	zap/logger.go:31	debug	{"debug": "debug内容"}
+{"level":"INFO","ts":"2024-01-22T16:37:37.085+0800","caller":"zap/logger.go:19","msg":"test","第一个":"第一个内容"}
+{"level":"DEBUG","ts":"2024-01-22T16:37:37.085+0800","caller":"zap/logger.go:31","msg":"debug","debug":"debug内容"}
