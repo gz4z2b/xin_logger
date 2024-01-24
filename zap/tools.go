@@ -13,7 +13,7 @@ func NewLogger(conf types.Conf) types.XinLogger {
 	core := zapcore.NewCore(encoder, writeSyncer, syncLogLevel(conf.EnableLevel))
 
 	logger := zap.New(core, zap.AddCaller())
-	return NewZapLogger(logger)
+	return NewZapLogger(logger, conf)
 }
 
 func getEncoder() zapcore.Encoder {
@@ -26,10 +26,11 @@ func getEncoder() zapcore.Encoder {
 
 func getLogWriter(conf types.Conf) zapcore.WriteSyncer {
 	lumberJackLogger := &lumberjack.Logger{
-		Filename: conf.LogPath,
-		MaxSize:  conf.MaxSize,
-		MaxAge:   conf.MaxAge,
-		Compress: false,
+		Filename:   conf.LogPath,
+		MaxSize:    conf.MaxSize,
+		MaxAge:     conf.MaxAge,
+		MaxBackups: conf.MaxBackups,
+		Compress:   false,
 	}
 	return zapcore.AddSync(lumberJackLogger)
 }

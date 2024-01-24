@@ -1,6 +1,8 @@
 package types
 
-import "errors"
+import (
+	"errors"
+)
 
 var Err_LevelIllegal = errors.New("日志等级不合法")
 var Err_PathNotNull = errors.New("日志路径不能为空")
@@ -12,8 +14,12 @@ type Conf struct {
 	MaxSize int
 	// 日志最大保存时间，天
 	MaxAge int
+	// 最大保留文件个数
+	MaxBackups int
 	// 记录最低等级
 	EnableLevel Level
+	TraceId     string
+	TraceIdKey  string
 }
 
 type Level int8
@@ -39,6 +45,7 @@ const (
 
 const default_maxage = 30
 const default_maxsize = 5
+const default_max_files = 10
 
 func CheckConf(conf *Conf) error {
 	if conf.EnableLevel < _minLevel || conf.EnableLevel > _maxLevel {
@@ -50,12 +57,19 @@ func CheckConf(conf *Conf) error {
 	if conf.MaxSize == 0 {
 		conf.MaxSize = default_maxsize
 	}
+	if conf.TraceIdKey == "" {
+		conf.TraceIdKey = "traceId"
+	}
+	if conf.MaxBackups == 0 {
+		conf.MaxBackups = default_max_files
+	}
 	if conf.LogPath == "" {
 		return Err_PathNotNull
 	}
 	if conf.EnableLevel == 0 {
 		conf.EnableLevel = InfoLevel
 	}
+
 	return nil
 }
 
