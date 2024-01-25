@@ -2,7 +2,7 @@
  * @Author: p_hanxichen
  * @Date: 2023-11-27 15:05:55
  * @LastEditors: p_hanxichen
- * @FilePath: /xinlogger/middleware/http/gin_mid_logger/builder.go
+ * @FilePath: /xinlogger/middleware/http/ginmidlogger/builder.go
  * @Description: gin的访问日志中间件
  *
  * Copyright (c) 2023 by gdtengnan, All Rights Reserved.
@@ -20,6 +20,7 @@ import (
 	"go.uber.org/atomic"
 )
 
+// 日志内容
 type AccessLog struct {
 	Method   string
 	Header   map[string][]string
@@ -44,16 +45,19 @@ func NewBuilder(fn func(ctx context.Context, al *AccessLog)) *MiddlewareBuilder 
 	}
 }
 
+// AllowReqBody 是否允许记录请求体
 func (b *MiddlewareBuilder) AllowReqBody(ok bool) *MiddlewareBuilder {
 	b.allowReqBody.Store(ok)
 	return b
 }
 
+// AllowRespBody 是否允许记录响应体
 func (b *MiddlewareBuilder) AllowRespBody(ok bool) *MiddlewareBuilder {
 	b.allowRespBody.Store(ok)
 	return b
 }
 
+// Build 构建中间件
 func (b *MiddlewareBuilder) Build() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		start := time.Now()
@@ -98,15 +102,19 @@ func (b *MiddlewareBuilder) Build() gin.HandlerFunc {
 	}
 }
 
+// 重写ctx的writer
 type responseWriter struct {
 	al *AccessLog
 	gin.ResponseWriter
 }
 
+// 记录header
 func (w *responseWriter) WriteHeader(code int) {
 	w.al.Status = code
 	w.ResponseWriter.WriteHeader(code)
 }
+
+// 记录返回体
 func (w *responseWriter) Write(data []byte) (n int, err error) {
 	dataString := string(data)
 	if len(dataString) > 1024 {
@@ -115,6 +123,8 @@ func (w *responseWriter) Write(data []byte) (n int, err error) {
 	w.al.RespBody = dataString
 	return w.ResponseWriter.Write(data)
 }
+
+// 返回体是string的情况
 func (w *responseWriter) WriteString(s string) (n int, err error) {
 	if len(s) > 1024 {
 		s = s[:1024]

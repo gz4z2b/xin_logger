@@ -6,8 +6,8 @@ import (
 
 	_ "embed"
 
-	redismidlogger "github.com/gz4z2b/xinlogger/middleware/cache/redis_mid_logger"
-	gormmidlogger "github.com/gz4z2b/xinlogger/middleware/database/gorm_mid_logger"
+	"github.com/gz4z2b/xinlogger/middleware/cache/redismidlogger"
+	"github.com/gz4z2b/xinlogger/middleware/database/gormmidlogger"
 	"github.com/gz4z2b/xinlogger/types"
 	"github.com/redis/go-redis/v9"
 	"gorm.io/driver/mysql"
