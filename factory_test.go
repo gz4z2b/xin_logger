@@ -6,8 +6,8 @@ import (
 
 	_ "embed"
 
-	"github.com/gz4z2b/xinlogger/middleware/cache/redismidlogger"
-	"github.com/gz4z2b/xinlogger/middleware/database/gormmidlogger"
+	"github.com/gz4z2b/xinlogger/loggermid/cachelogger"
+	"github.com/gz4z2b/xinlogger/loggermid/databaselogger"
 	"github.com/gz4z2b/xinlogger/types"
 	"github.com/redis/go-redis/v9"
 	"gorm.io/driver/mysql"
@@ -65,8 +65,8 @@ func TestGormMid(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	db.Use(gormmidlogger.NewSqlLoggerMid(func(sql string, rows, seconds int) {
-		logger.Info("数据库操作", types.NewField("sql", sql), types.NewField("effect_rows", rows), types.NewField("use_seconds", seconds))
+	db.Use(databaselogger.NewSqlLoggerMid(func(sql string, rows, seconds int) {
+		logger.Info("数据库操作", types.NewField("sql", sql), types.NewField("影响行数", rows), types.NewField("用时(毫秒)", seconds))
 	}))
 
 	var user User
@@ -97,18 +97,20 @@ func TestRedisLogger(t *testing.T) {
 		MaxSize: 1,
 		//EnableLevel: types.DebugLevel,
 	})
+
 	if err != nil {
 		t.Error(err)
 	}
-	r.AddHook(redismidlogger.NewRedisLoggerHook(func(cmd string, milliSeconds int) {
-		logger.Info("redis操作", types.NewField("命令", cmd), types.NewField("用时", milliSeconds))
+	r.AddHook(cachelogger.NewRedisLoggerHook(func(cmd string, milliSeconds int) {
+		logger.Info("redis操作", types.NewField("命令", cmd), types.NewField("用时(毫秒)", milliSeconds))
 	}))
-	r.Get(context.Background(), "string")
+	result, err := r.Get(context.Background(), "string").Bytes()
+	t.Log(result, err)
 
-	for i := 0; i < 100000; i++ {
-		res, err := r.Eval(context.Background(), luaSetCode, []string{"test"}, 123).Int()
-		t.Log(res, err)
-	}
+	// for i := 0; i < 100000; i++ {
+	// 	res, err := r.Eval(context.Background(), luaSetCode, []string{"test"}, 123).Int()
+	// 	t.Log(res, err)
+	// }
 
 }
 

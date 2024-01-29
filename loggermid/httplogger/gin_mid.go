@@ -2,13 +2,13 @@
  * @Author: p_hanxichen
  * @Date: 2023-11-27 15:05:55
  * @LastEditors: p_hanxichen
- * @FilePath: /xinlogger/middleware/http/ginmidlogger/builder.go
+ * @FilePath: /xinlogger/loggermidd/http/gin_mid.go
  * @Description: gin的访问日志中间件
  *
  * Copyright (c) 2023 by gdtengnan, All Rights Reserved.
  */
 
-package ginmidlogger
+package httplogger
 
 import (
 	"bytes"

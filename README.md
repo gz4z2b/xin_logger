@@ -50,7 +50,7 @@ func main() {
 import(
     "github.com/gz4z2b/xinlogger/types"
     "github.com/gz4z2b/xinlogger"
-    "github.com/gz4z2b/xinlogger/middleware/http/ginmidlogger"
+    "github.com/gz4z2b/xinlogger/loggermid/httplogger"
 )
 
 func main() {
@@ -67,8 +67,8 @@ func main() {
     if err != nil {
         panic(err)
     }
-	server.Use(ginmidlogger.NewBuilder(
-        func(ctx context.Context, al *ginmidlogger.AccessLog) {
+	server.Use(httplogger.NewBuilder(
+        func(ctx context.Context, al *httplogger.AccessLog) {
 			logger.Debug("access log", types.NewField("log", al))
             // 作为http请求日志，记得最后按照自己的需求手动刷新一下traceId，目前做不到自动刷新
             logger.FlushTraceId()
@@ -84,7 +84,7 @@ func main() {
     import(
         "github.com/gz4z2b/xinlogger/types"
         "github.com/gz4z2b/xinlogger"
-        "github.com/gz4z2b/xinlogger/middleware/database/gormmidlogger"
+        "github.com/gz4z2b/xinlogger/loggermid/databaselogger"
     )
     func main() {
         // 替换为自己的数据库连接 begin
@@ -106,7 +106,7 @@ func main() {
 	    }
 	    
         // 注册插件
-	    db.Use(gormmidlogger.NewSqlLoggerMid(func(sql string, rows, seconds int) {
+	    db.Use(databaselogger.NewSqlLoggerMid(func(sql string, rows, seconds int) {
 	    	logger.Info("数据库操作", types.NewField("sql", sql), types.NewField("effect_rows", rows), types.NewField("use_seconds", seconds))
 	    }))
     }
@@ -119,7 +119,7 @@ func main() {
     import(
         "github.com/gz4z2b/xinlogger/types"
         "github.com/gz4z2b/xinlogger"
-        "github.com/gz4z2b/xinlogger/middleware/cache/redismidlogger"
+        "github.com/gz4z2b/xinlogger/cachelogger/cachelogger"
     )
 
     func main() {
@@ -141,7 +141,7 @@ func main() {
 	    }
 
         // 注册插件
-	    r.AddHook(redismidlogger.NewRedisLoggerHook(func(cmd string, milliSeconds int) {
+	    r.AddHook(cachelogger.NewRedisLoggerHook(func(cmd string, milliSeconds int) {
 	    	logger.Info("redis操作", types.NewField("命令", cmd), types.NewField("用时", milliSeconds))
 	    }))
     }

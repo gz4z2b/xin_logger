@@ -1,4 +1,4 @@
-package redismidlogger
+package cachelogger
 
 import (
 	"context"
@@ -30,11 +30,11 @@ func (l *RedisLoggerHook) ProcessHook(next redis.ProcessHook) redis.ProcessHook 
 	return func(ctx context.Context, cmd redis.Cmder) error {
 		startTime := time.Now()
 
-		next(ctx, cmd)
+		result := next(ctx, cmd)
 
 		useTime := time.Since(startTime).Milliseconds()
 		l.logFun(cmd.String(), int(useTime))
-		return nil
+		return result
 	}
 }
 
@@ -42,7 +42,7 @@ func (l *RedisLoggerHook) ProcessPipelineHook(next redis.ProcessPipelineHook) re
 	return func(ctx context.Context, cmds []redis.Cmder) error {
 		startTime := time.Now()
 
-		next(ctx, cmds)
+		result := next(ctx, cmds)
 
 		useTime := time.Since(startTime).Milliseconds()
 		var cmdStr string
@@ -50,6 +50,6 @@ func (l *RedisLoggerHook) ProcessPipelineHook(next redis.ProcessPipelineHook) re
 			cmdStr += cmd.String() + "\n"
 		}
 		l.logFun(cmdStr, int(useTime))
-		return nil
+		return result
 	}
 }

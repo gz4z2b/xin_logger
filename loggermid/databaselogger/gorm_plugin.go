@@ -2,13 +2,13 @@
  * @Author: p_hanxichen
  * @Date: 2024-01-23 11:09:29
  * @LastEditors: p_hanxichen
- * @FilePath: /xinlogger/middleware/database/gormmidlogger/plugin.go
+ * @FilePath: /xinlogger/loggermidd/database/gorm_plugin.go
  * @Description: gorm中间件sql日志
  *
  * Copyright (c) 2024 by gdtengnan, All Rights Reserved.
  */
 
-package gormmidlogger
+package databaselogger
 
 import (
 	"time"
