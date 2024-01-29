@@ -1,4 +1,4 @@
-module github.com/gz4z2b/xinlogger
+module github.com/gz4z2b/xinlog
 
 go 1.20
 

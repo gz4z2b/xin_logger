@@ -1,7 +1,7 @@
 package zap
 
 import (
-	"github.com/gz4z2b/xinlogger/types"
+	"github.com/gz4z2b/xinlog/types"
 	"github.com/natefinch/lumberjack"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"

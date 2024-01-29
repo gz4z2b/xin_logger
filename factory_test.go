@@ -6,9 +6,9 @@ import (
 
 	_ "embed"
 
-	"github.com/gz4z2b/xinlogger/loggermid/cachelogger"
-	"github.com/gz4z2b/xinlogger/loggermid/databaselogger"
-	"github.com/gz4z2b/xinlogger/types"
+	"github.com/gz4z2b/xinlog/loggermid/cachelogger"
+	"github.com/gz4z2b/xinlog/loggermid/databaselogger"
+	"github.com/gz4z2b/xinlog/types"
 	"github.com/redis/go-redis/v9"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

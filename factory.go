@@ -3,8 +3,8 @@ package xinlogger
 import (
 	"errors"
 
-	"github.com/gz4z2b/xinlogger/types"
-	"github.com/gz4z2b/xinlogger/zap"
+	"github.com/gz4z2b/xinlog/types"
+	"github.com/gz4z2b/xinlog/zap"
 )
 
 const ZAP_TYPE string = "zap"

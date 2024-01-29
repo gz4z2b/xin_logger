@@ -2,7 +2,7 @@ package zap
 
 import (
 	"github.com/google/uuid"
-	"github.com/gz4z2b/xinlogger/types"
+	"github.com/gz4z2b/xinlog/types"
 	"go.uber.org/zap"
 )
 
